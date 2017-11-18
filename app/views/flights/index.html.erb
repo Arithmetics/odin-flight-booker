@@ -1,0 +1,32 @@
+<div class= "header">
+  <h3> Flight Searcher </h3>
+  <p> <%= @yes %> </p>
+
+<%= form_tag('/flights', method: 'get') do %>
+  <%= text_field(:flight, :from_airport) %>
+  <%= text_field(:flight, :to_airport) %>
+  <%= submit_tag 'submit' %>
+<% end %>
+
+<p><%= params.inspect %></p>
+
+<div class="results" >
+  <table>
+    <tr>
+      <th>Flight ID</th>
+      <th>Departing Airport</th>
+      <th>Arriving Airport</th>
+      <th>Flight Duration(hours)</th>
+      <th> Departure Date </th>
+    </tr>
+    <% @flights.each do |flight| %>
+      <tr>
+        <th> <%= flight.id %> </th>
+        <th> <%= flight.from_airport.code %> </th>
+        <th> <%= flight.to_airport.code %> </th>
+        <th> <%= flight.duration %> </th>
+        <th> <%= flight.departure %> </th>
+      </tr>
+    <% end %>
+  </table>
+</div>

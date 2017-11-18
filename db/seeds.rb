@@ -11,6 +11,16 @@ require 'csv'
 file = File.join(Rails.root, 'app', 'csv', 'codes.csv')
 airport_codes = CSV.read(file).flatten
 
-airport_codes.each do |entry|
-  Airport.create(code: entry)
+20.times do
+  Airport.create(code: airport_codes.sample)
+end
+
+
+80.times do
+  Flight.create(to_airport: Airport.order("RANDOM()").first,
+                from_airport: Airport.order("RANDOM()").second,
+                duration: rand(1..14),
+                departure: Faker::Time.forward(365, :all)
+              )
+
 end
