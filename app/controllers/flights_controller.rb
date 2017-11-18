@@ -3,6 +3,8 @@ class FlightsController < ApplicationController
   def index
     @flights = Flight.all
 
+    @airport_options = Airport.all.map{ |x| [ x.code, x.code ]}
+    @airport_options.unshift(["",""])
     if params[:flight]
       if params[:flight][:from_airport] != ""
         @from_code = params[:flight][:from_airport]

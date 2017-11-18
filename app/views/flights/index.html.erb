@@ -3,8 +3,8 @@
   <p> <%= @yes %> </p>
 
 <%= form_tag('/flights', method: 'get') do %>
-  <%= text_field(:flight, :from_airport) %>
-  <%= text_field(:flight, :to_airport) %>
+  <%= select(:flight, :from_airport, @airport_options) %>
+  <%= select(:flight, :to_airport, @airport_options) %>
   <%= submit_tag 'submit' %>
 <% end %>
 
