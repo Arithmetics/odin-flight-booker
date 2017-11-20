@@ -1,10 +1,57 @@
 <div class= "header">
   <h3> Flight Searcher </h3>
-  <p> <%= @yes %> </p>
+  <p> <%= @regdate %> </p>
 
 <%= form_tag('/flights', method: 'get') do %>
-  <%= select(:flight, :from_airport, @airport_options) %>
-  <%= select(:flight, :to_airport, @airport_options) %>
+  <% if params[:flight] %>
+    <%= select(:flight,
+               :from_airport,
+               @airport_options,
+               :selected => params[:flight][:from_airport]) %>
+    <%= select(:flight,
+               :to_airport,
+               @airport_options,
+               :selected => params[:flight][:to_airport]) %>
+    <br>
+    <br>
+    <br>
+    <%= date_select(:flight,
+                    :start_date,
+                    start_year: Time.now.year,
+                    :selected => Time.now)%>
+    <br>
+    <br>
+    <br>
+    <%= date_select(:flight,
+                    :end_date,
+                    start_year: Time.now.year
+                      )%>
+  <% else %>
+    <%= select(:flight,
+               :from_airport,
+               @airport_options) %>
+    <%= select(:flight,
+               :to_airport,
+               @airport_options) %>
+   <br>
+   <br>
+   <br>
+   <%= date_select(:flight,
+                   :start_date,
+                   start_year: Time.now.year,
+                   default: @the_date,
+                   :include_blank=> @the_date.nil? ) %>
+   <br>
+   <br>
+   <br>
+   <%= date_select(:flight,
+                   :end_date,
+                   start_year: Time.now.year,
+                   default: @the_date,
+                   :include_blank=> @the_date.nil? ) %>
+  <% end %>
+  <br>
+  <br>
   <%= submit_tag 'submit' %>
 <% end %>
 

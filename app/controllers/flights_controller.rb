@@ -14,6 +14,9 @@ class FlightsController < ApplicationController
       if params[:flight][:to_airport] != ""
         @to_code = params[:flight][:to_airport]
         @flights = @flights.where(to_airport: Airport.find_by_code(@to_code) )
+        @regdate =  Date.new(params["date(1i)"].to_i,
+                    params["date(2i)"].to_i,
+                    params["date(3i)"].to_i)
       end
 
     end
