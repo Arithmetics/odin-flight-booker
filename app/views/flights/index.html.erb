@@ -4,38 +4,52 @@
 
 <%= form_tag('/flights', method: 'get') do %>
   <% if params[:flight] %>
+    <%= label :from_airport, "Departing Airport"  %>
     <%= select(:flight,
                :from_airport,
                @airport_options,
                :selected => params[:flight][:from_airport]) %>
+    <%= label :to_airport, "Arrival Airport" %>
     <%= select(:flight,
                :to_airport,
                @airport_options,
                :selected => params[:flight][:to_airport]) %>
-    <br>
-    <br>
-    <br>
-    <%= date_select(:flight,
-                    :start_date,
-                    start_year: Time.now.year,
-                    :selected => Time.now)%>
-    <br>
-    <br>
-    <br>
-    <%= date_select(:flight,
-                    :end_date,
-                    start_year: Time.now.year
-                      )%>
+   <br>
+   <br>
+   <br>
+   <%= label :start_date, "Search After Date:"  %>
+   <%= date_select(:flight,
+                   :start_date,
+                   start_year: Time.now.year,
+                   default: @submitted_start_date,
+                   :include_blank=> @submitted_start_date.nil? ) %>
+   <br>
+   <br>
+   <br>
+   <%= label :end_date, "Search Before Date:"  %>
+   <%= date_select(:flight,
+                   :end_date,
+                   start_year: Time.now.year,
+                   default: @submitted_end_date,
+                   :include_blank=> @submitted_end_date.nil? ) %>
+   <%= label :num_passengers, "Number of Passengers:"  %>
+
+   <%= select(:flight, :num_passengers, [1,2,3,4], :selected => @submitted_num_passengers) %>
+
   <% else %>
+    <%= label :from_airport, "Departing Airport"  %>
     <%= select(:flight,
                :from_airport,
                @airport_options) %>
+
+    <%= label :to_airport, "Arrival Airport" %>
     <%= select(:flight,
                :to_airport,
                @airport_options) %>
    <br>
    <br>
    <br>
+   <%= label :start_date, "Search After Date:"  %>
    <%= date_select(:flight,
                    :start_date,
                    start_year: Time.now.year,
@@ -44,16 +58,23 @@
    <br>
    <br>
    <br>
+   <%= label :end_date, "Search Before Date:"  %>
    <%= date_select(:flight,
                    :end_date,
                    start_year: Time.now.year,
                    default: @the_date,
                    :include_blank=> @the_date.nil? ) %>
+
+    <%= label :num_passengers, "Number of Passengers:"  %>
+    <%= select(:flight, :num_passengers, [1,2,3,4]) %>
   <% end %>
   <br>
   <br>
-  <%= submit_tag 'submit' %>
+  <%= submit_tag 'Submit' %>
 <% end %>
+<br>
+<br>
+<%= button_to "Reset Search", root_url, :method => :get %>
 
 <p><%= params.inspect %></p>
 
