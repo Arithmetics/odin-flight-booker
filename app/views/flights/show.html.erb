@@ -1,0 +1,16 @@
+<h2>Bookings for Flight<%= @flight.id %> </h2>
+<h3>Service from <%= @flight.from_airport.code %>
+to <%= @flight.to_airport.code %> </h3>
+<br>
+<br>
+<h3>Departing on <%= @flight.departure %> </h3>
+<br>
+<br>
+<p> The following passengers have been booked for this flight! </p>
+<ul>
+  <% @passengers.each do |passenger| %>
+   <li><%= passenger.name %>, <%= passenger.email %> </li>
+  <% end %>
+</ul>
+
+<%= link_to "Home", root_path %>

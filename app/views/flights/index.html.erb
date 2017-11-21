@@ -32,6 +32,8 @@
                    start_year: Time.now.year,
                    default: @submitted_end_date,
                    :include_blank=> @submitted_end_date.nil? ) %>
+   <br>
+   <br>
    <%= label :num_passengers, "Number of Passengers:"  %>
 
    <%= select(:flight, :num_passengers, [1,2,3,4], :selected => @submitted_num_passengers) %>
@@ -64,8 +66,11 @@
                    start_year: Time.now.year,
                    default: @the_date,
                    :include_blank=> @the_date.nil? ) %>
+   <br>
+   <br>
 
     <%= label :num_passengers, "Number of Passengers:"  %>
+
     <%= select(:flight, :num_passengers, [1,2,3,4]) %>
   <% end %>
   <br>
@@ -78,23 +83,36 @@
 
 <p><%= params.inspect %></p>
 
-<div class="results" >
-  <table>
-    <tr>
-      <th>Flight ID</th>
-      <th>Departing Airport</th>
-      <th>Arriving Airport</th>
-      <th>Flight Duration(hours)</th>
-      <th> Departure Date </th>
-    </tr>
-    <% @flights.each do |flight| %>
+
+<% if params[:flight] %>
+
+<%= form_tag('/bookings/new', method: 'get') do %>
+<%= submit_tag "Book Flight with #{params[:flight][:num_passengers]} Passenger(s)" %>
+  <div class="results" >
+    <table>
       <tr>
-        <th> <%= flight.id %> </th>
-        <th> <%= flight.from_airport.code %> </th>
-        <th> <%= flight.to_airport.code %> </th>
-        <th> <%= flight.duration %> </th>
-        <th> <%= flight.departure %> </th>
+        <th>Flight ID</th>
+        <th>Departing Airport</th>
+        <th>Arriving Airport</th>
+        <th>Flight Duration(hours)</th>
+        <th> Departure Date </th>
+        <th> Select Flight </th>
       </tr>
-    <% end %>
-  </table>
-</div>
+      <% @flights.each do |flight| %>
+        <tr>
+          <th> <%= flight.id %> </th>
+          <th> <%= flight.from_airport.code %> </th>
+          <th> <%= flight.to_airport.code %> </th>
+          <th> <%= flight.duration %> </th>
+          <th> <%= flight.departure %> </th>
+          <th> <%= radio_button_tag "booking[flight_id]",flight.id %> </th>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <%= hidden_field_tag "booking[num_passengers]", :number_passengers, value: @submitted_num_passengers %>
+
+
+  <% end %>
+<% end %>

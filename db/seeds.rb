@@ -16,7 +16,7 @@ airport_codes = CSV.read(file).flatten
 end
 
 
-200.times do
+500.times do
   Flight.create(to_airport: Airport.order("RANDOM()").first,
                 from_airport: Airport.order("RANDOM()").second,
                 duration: rand(1..14),

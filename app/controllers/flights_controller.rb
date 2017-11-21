@@ -1,5 +1,18 @@
 class FlightsController < ApplicationController
 
+  def show
+    @flight = Flight.find(params[:id])
+    @passenger_ids = [params[:passenger_id_1],
+                      params[:passenger_id_2],
+                      params[:passenger_id_3],
+                      params[:passenger_id_4]]
+    @passenger_ids.select! { |x| x != nil   }
+    @passengers = []
+    @passenger_ids.each do |x|
+      @passengers.push(Passenger.find_by_id(x.to_i))
+    end
+  end
+
   def index
     @flights = Flight.all
 

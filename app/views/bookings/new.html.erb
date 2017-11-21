@@ -1,0 +1,26 @@
+<h1> new booking </h1>
+<p><%= params.inspect %></p>
+<p> <%= @flight.id %> </p>
+<p> <%= @num_passengers %> </p>
+<p> <%= @booking %> </p>
+
+<h1>Enter Passenger Details: </h1>
+
+<%= form_tag bookings_path do%>
+  <%= hidden_field_tag "flight_id", :flight_id, value: @flight.id %>
+  <%= hidden_field_tag "num_passengers", :number_passengers, value: @num_passengers %>
+
+  <% @num_passengers.times do |num| %>
+    <h3> <%= "Passenger #{num+1}" %> </h5>
+    <%= label :passenger_name, "Passenger_name"  %>
+    <%= text_field_tag "passenger_name#{num}" %>
+    <br>
+    <br>
+    <%= label :passenger_email, "Passenger Email"  %>
+    <%= text_field_tag "passenger_email#{num}" %>
+  <% end %>
+  <br>
+  <br>
+  <%= submit_tag "Book Flight" %>
+
+<% end %>
