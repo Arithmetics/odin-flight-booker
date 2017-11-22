@@ -16,6 +16,7 @@ class BookingsController < ApplicationController
                                  email: params["passenger_email#{num}"])
       @flight.bookings.create(passenger: @passenger)
       @passenger_ids[num] = @passenger.id
+      PassengerMailer.thank_you_email(@passenger).deliver_now
     end
       redirect_to controller: 'flights',
                   action: 'show',
